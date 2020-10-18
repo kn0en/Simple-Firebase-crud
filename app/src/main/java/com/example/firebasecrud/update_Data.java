@@ -1,25 +1,26 @@
 package com.example.firebasecrud;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.firebasecrud.model.data_mahasiswa;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class update_Data extends AppCompatActivity {
 
     //Deklarasi Variable
     private EditText nimBaru, namaBaru, jurusanBaru;
-    private Button update;
     private DatabaseReference database;
     private FirebaseAuth auth;
     private String cekNIM, cekNama, cekJurusan;
@@ -28,11 +29,11 @@ public class update_Data extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_data);
-        getSupportActionBar().setTitle("Update Data");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Update Data");
         nimBaru = findViewById(R.id.new_nim);
         namaBaru = findViewById(R.id.new_nama);
         jurusanBaru = findViewById(R.id.new_jurusan);
-        update = findViewById(R.id.update);
+        Button update = findViewById(R.id.update);
 
         //Mendapatkan Instance autentikasi dan Referensi dari Database
         auth = FirebaseAuth.getInstance();
@@ -69,7 +70,7 @@ public class update_Data extends AppCompatActivity {
 
     //Menampilkan data yang akan di update
     private void getData(){
-        final String getNIM = getIntent().getExtras().getString("dataNIM");
+        final String getNIM = Objects.requireNonNull(getIntent().getExtras()).getString("dataNIM");
         final String getNama = getIntent().getExtras().getString("dataNama");
         final String getJurusan = getIntent().getExtras().getString("dataJurusan");
         nimBaru.setText(getNIM);
@@ -78,9 +79,11 @@ public class update_Data extends AppCompatActivity {
     }
 
     //Proses Update data yang sudah ditentukan
-    private void updateMahasiswa(data_mahasiswa mahasiswa){
+    private void updateMahasiswa(data_mahasiswa mahasiswa) {
         String userID = auth.getUid();
-        String getKey = getIntent().getExtras().getString("getPrimaryKey");
+        String getKey = Objects.requireNonNull(getIntent().getExtras()).getString("getPrimaryKey");
+        assert userID != null;
+        assert getKey != null;
         database.child("Admin")
                 .child(userID)
                 .child("Mahasiswa")

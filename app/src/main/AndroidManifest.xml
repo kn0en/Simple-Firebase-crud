@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.firebasecrud.MyListData" />
-        <activity android:name="com.example.firebasecrud.update_Data"></activity>
+        <activity android:name="com.example.firebasecrud.update_Data" />
     </application>
 
 </manifest>

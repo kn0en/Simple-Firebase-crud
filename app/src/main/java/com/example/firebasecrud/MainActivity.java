@@ -1,8 +1,6 @@
 package com.example.firebasecrud;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.firebasecrud.model.data_mahasiswa;
 import com.firebase.ui.auth.AuthUI;
@@ -21,10 +22,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Collections;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.save:
                 //Mendapatkan UserID dari pengguna yang Terautentikasi
-                final String getUserID = auth.getCurrentUser().getUid();
+                final String getUserID = Objects.requireNonNull(auth.getCurrentUser()).getUid();
 
                 //Mendapatkan Instance dari Database
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -184,17 +185,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Admin").child("Mahasiswa");
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if(!dataSnapshot.child("Mahasiswa").child(getUserID).child("Mahasiswa").exists()){
-                                Toast.makeText(MainActivity.this,"Data Does Not Exist", Toast.LENGTH_LONG).show();
-                            }else{
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.child("Mahasiswa").child(getUserID).child("Mahasiswa").exists()) {
+                                Toast.makeText(MainActivity.this, "Data Does Not Exist", Toast.LENGTH_LONG).show();
+                            } else {
 
-                                Toast.makeText(MainActivity.this,"Data Exist", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "Data Exist", Toast.LENGTH_LONG).show();
                             }
                         }
 
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
                     });
