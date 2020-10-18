@@ -211,9 +211,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void onComplete(@NonNull Task task) {
                                 Toast.makeText(MainActivity.this, "Logout Berhasil", Toast.LENGTH_SHORT).show();
-                                finish();
                             }
                         });
+                defaultUI();
                 break;
 
             case R.id.showdata:
